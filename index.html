@@ -42,7 +42,7 @@
         console.log(sourceData.length, imgsData[0].length, imgsData[1].length, imgsData[2].length);
         for(var imgData of imgsData) {
           for(var pixel = 0; pixel < sourceData.length; pixel += 4) {
-            if(sourceData[pixel] - imgData[pixel] > 5 || sourceData[pixel+1] - imgData[pixel+1] > 5 || sourceData[pixel+2] - imgData[pixel+2] > 5) {
+            if(sourceData[pixel] - imgData[pixel] > 20 || sourceData[pixel+1] - imgData[pixel+1] > 20 || sourceData[pixel+2] - imgData[pixel+2] > 20) {
               ctx.fillStyle = "rgb(" + imgData[pixel] + "," + imgData[pixel+1] + "," + imgData[pixel+2] + ")";
               ctx.fillRect(pixel/4%canvas.width, Math.floor(pixel/4/canvas.width), 1, 1);
             }
