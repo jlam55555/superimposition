@@ -39,6 +39,7 @@
         }
         ctx.drawImage(bgImg, 0, 0);
         var sourceData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        console.log(sourceData, sourceData.length);
         for(var imgData of imgsData) {
           for(var pixel = 0; pixel < sourceData.length; pixel += 3) {
             console.log(sourceData[pixel], imgData[pixel], sourceData[pixel+1], imgData[pixel+1], sourceData[pixel+2], imgData[pixel+2]);
