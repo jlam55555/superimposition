@@ -6,6 +6,7 @@
   <body>
     <canvas id="canvas"></canvas>
     <script>
+      var threshold = prompt("threshold");
       var canvas = document.getElementById("canvas");
       var ctx = canvas.getContext("2d");
       var bgSrc = "source.jpg";
@@ -39,7 +40,6 @@
         }
         ctx.drawImage(bgImg, 0, 0);
         var sourceData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        var threshold = 20;
         for(var imgData of imgsData) {
           for(var pixel = 0; pixel < sourceData.length; pixel += 4) {
             if(sourceData[pixel] - imgData[pixel] > threshold || sourceData[pixel+1] - imgData[pixel+1] > threshold || sourceData[pixel+2] - imgData[pixel+2] > threshold) {
