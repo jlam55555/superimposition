@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Superimposition</title>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var bgSrc = "source.jpg";
+      var imgsSrc = ["img1.jpg", "img2.jpg", "img3.jpg"];
+      var bgImg = new Image();
+      bgImg.src = bgSrc;
+      var imgs = [];
+      var loaded = 0;
+      for(var imgSrc of imgsSrc) {
+        var img = new Image();
+        img.src = imgSrc;
+        imgs.push(img);
+        img.addEventListener("load", function() {
+          if(++loaded == imgs.length+1) {
+            run();
+          }
+        }, false);
+      }
+      bgImg.addEventListener("load", function() {
+        if(++loaded == imgs.length+1) {
+          run();
+        }
+      }, false);
+      var run = function() {
+        canvas.height = bgImg.height;
+        canvas.width = bgImg.width;
+        var imgsData = [];
+        for(var img of imgs) {
+          ctx.drawImage(img, 0, 0);
+          imgsData.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+        }
+        ctx.drawImage(bgImg, 0, 0);
+        var sourceData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for(var imgData of imgsData) {
+          for(var pixel = 0; pixel < sourceData.length; pixel += 3) {
+            if(sourceData[pixel] != imgData[pixel] || sourceData[pixel+1] != imgData[pixel+1] || sourceData[pixel+2] != imgData[pixel+2]) {
+              ctx.fillStyle = "rgb(" + imgData[pixel] + "," + imgData[pixel+1] + "," + imgData[pixel+2] + ")";
+              ctx.fillRect(Math.floor(pixel/3/canvas.width), pixel/3%canvas.width, 1, 1);
+            }
+          }
+          break;
+        }
+      };
+    </script>
+  </body>
+</html>
